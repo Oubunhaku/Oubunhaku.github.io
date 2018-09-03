@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="src下的一些Python文件ESPnet中不同的任务项目往往由不完全相同的文件来执行，但他们共享一些基本的模块，例如整个神经网络的框架。src目录下有很多这类的模块，我会从由receipts的网络训练为起点的调用顺序出发，以Pytorch为例，一点一点来解析这些共享文件。">
+<meta name="description" content="src下的一些Python文件ESPnet中不同的任务项目往往由不完全相同的文件来执行，但他们共享一些基本的模块，例如整个神经网络的框架。src目录下有很多这类的模块，我会从由recipe的网络训练为起点的调用顺序出发，以Pytorch为例，一点一点来解析这些共享文件。">
 <meta name="keywords" content="ASR">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ESPnet Learning(2)：认识几个重要文件">
 <meta property="og:url" content="http://yoursite.com/2018/09/02/ESPnet-Learning-2/index.html">
 <meta property="og:site_name" content="Oubunhaku">
-<meta property="og:description" content="src下的一些Python文件ESPnet中不同的任务项目往往由不完全相同的文件来执行，但他们共享一些基本的模块，例如整个神经网络的框架。src目录下有很多这类的模块，我会从由receipts的网络训练为起点的调用顺序出发，以Pytorch为例，一点一点来解析这些共享文件。">
+<meta property="og:description" content="src下的一些Python文件ESPnet中不同的任务项目往往由不完全相同的文件来执行，但他们共享一些基本的模块，例如整个神经网络的框架。src目录下有很多这类的模块，我会从由recipe的网络训练为起点的调用顺序出发，以Pytorch为例，一点一点来解析这些共享文件。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-09-02T04:06:56.064Z">
+<meta property="og:updated_time" content="2018-09-03T11:37:08.518Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ESPnet Learning(2)：认识几个重要文件">
-<meta name="twitter:description" content="src下的一些Python文件ESPnet中不同的任务项目往往由不完全相同的文件来执行，但他们共享一些基本的模块，例如整个神经网络的框架。src目录下有很多这类的模块，我会从由receipts的网络训练为起点的调用顺序出发，以Pytorch为例，一点一点来解析这些共享文件。">
+<meta name="twitter:description" content="src下的一些Python文件ESPnet中不同的任务项目往往由不完全相同的文件来执行，但他们共享一些基本的模块，例如整个神经网络的框架。src目录下有很多这类的模块，我会从由recipe的网络训练为起点的调用顺序出发，以Pytorch为例，一点一点来解析这些共享文件。">
 
 
 
@@ -352,8 +352,10 @@
       
 
       
-        <h2 id="src下的一些Python文件"><a href="#src下的一些Python文件" class="headerlink" title="src下的一些Python文件"></a>src下的一些Python文件</h2><p>ESPnet中不同的任务项目往往由不完全相同的文件来执行，但他们共享一些基本的模块，例如整个神经网络的框架。src目录下有很多这类的模块，我会从由receipts的网络训练为起点的调用顺序出发，以Pytorch为例，一点一点来解析这些共享文件。<br><a id="more"></a></p>
-<h3 id="用于参数解析的bin-asr-train-py"><a href="#用于参数解析的bin-asr-train-py" class="headerlink" title="用于参数解析的bin/asr_train.py"></a>用于参数解析的bin/asr_train.py</h3><p>暂时写到这里，晚安！</p>
+        <h2 id="src下的一些Python文件"><a href="#src下的一些Python文件" class="headerlink" title="src下的一些Python文件"></a>src下的一些Python文件</h2><p>ESPnet中不同的任务项目往往由不完全相同的文件来执行，但他们共享一些基本的模块，例如整个神经网络的框架。src目录下有很多这类的模块，我会从由recipe的网络训练为起点的调用顺序出发，以Pytorch为例，一点一点来解析这些共享文件。<br><a id="more"></a></p>
+<h3 id="用于参数解析的bin-asr-train-py"><a href="#用于参数解析的bin-asr-train-py" class="headerlink" title="用于参数解析的bin/asr_train.py"></a>用于参数解析的bin/asr_train.py</h3><p>asr_train.py模块被recipe直接调用，并在recipe中直接以Shell语言调整其参数。打开asr_train.py，会发现它主要引入了argparse，一个参数解析模块。从官方文件中可以知道，argparse模块可以轻松编写用户友好的命令行界面。 程序定义了它需要的参数，argparse将弄清楚如何解析sys.argv中的参数。 当用户给程序提供无效参数时，argparse模块还会自动生成帮助和使用消息并发出错误。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line">parser = argparse.ArgumentParser()</span><br><span class="line">parser.add_argument(<span class="string">'--gpu'</span>, default=<span class="keyword">None</span>, type=int, nargs=<span class="string">'?'</span>,</span><br><span class="line">					help=<span class="string">'GPU ID (negative value indicates CPU)'</span>)</span><br><span class="line">args=parser.parse_args()</span><br></pre></td></tr></table></figure>
+<p>需要注意的是，</p>
 
       
     </div>
