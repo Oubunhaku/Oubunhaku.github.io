@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Pytorch," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="今天会开始详细介绍pytorch从入门到高阶。PyTorch是使用GPU和CPU优化的深度学习张量库。文章主要参考Pytorch官网。">
+<meta name="keywords" content="Pytorch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pytorch Beginner 1：Pytorch头脑风暴(1)">
+<meta property="og:url" content="http://yoursite.com/2018/09/05/Pytorch-1/index.html">
+<meta property="og:site_name" content="Oubunhaku">
+<meta property="og:description" content="今天会开始详细介绍pytorch从入门到高阶。PyTorch是使用GPU和CPU优化的深度学习张量库。文章主要参考Pytorch官网。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-09-05T05:28:28.961Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Pytorch Beginner 1：Pytorch头脑风暴(1)">
+<meta name="twitter:description" content="今天会开始详细介绍pytorch从入门到高阶。PyTorch是使用GPU和CPU优化的深度学习张量库。文章主要参考Pytorch官网。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/05/Pytorch-1/"/>
+
+
+
+
+
+  <title>Pytorch Beginner 1：Pytorch头脑风暴(1) | Oubunhaku</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Oubunhaku</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Better Tomorrow</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/05/Pytorch-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WANG Wenbo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Oubunhaku">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Pytorch Beginner 1：Pytorch头脑风暴(1)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-05T12:54:06+09:00">
+                2018-09-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Pytorch/" itemprop="url" rel="index">
+                    <span itemprop="name">Pytorch</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>今天会开始详细介绍<a href="https://pytorch.org/tutorials/index.html#" target="_blank" rel="noopener">pytorch</a>从入门到高阶。PyTorch是使用GPU和CPU优化的深度学习张量库。文章主要参考Pytorch官网。<br><a id="more"></a></p>
+<h2 id="什么是Pytorch"><a href="#什么是Pytorch" class="headerlink" title="什么是Pytorch"></a>什么是Pytorch</h2><p>从<a href="https://pytorch.org/tutorials/index.html#" target="_blank" rel="noopener">pytorch</a>官网中可以知道，它是基于Python的科学计算软件包，可以使用GPU的深入学习研究平台。</p>
+<h2 id="Tensors"><a href="#Tensors" class="headerlink" title="Tensors"></a>Tensors</h2><p>Tensors类似于NumPy的ndarray，可用于GPU以加速计算。官网给出例子如下。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> torch</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = torch.empty(<span class="number">5</span>,<span class="number">3</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(x)</span><br><span class="line">tensor([[<span class="number">-5.0254e+18</span>,  <span class="number">4.5609e-41</span>, <span class="number">-5.0254e+18</span>],</span><br><span class="line">        [ <span class="number">4.5609e-41</span>,  <span class="number">1.6395e-43</span>,  <span class="number">1.3873e-43</span>],</span><br><span class="line">        [ <span class="number">1.4574e-43</span>,  <span class="number">4.4842e-44</span>,  <span class="number">1.4293e-43</span>],</span><br><span class="line">        [ <span class="number">1.4714e-43</span>,  <span class="number">1.5134e-43</span>,  <span class="number">1.4153e-43</span>],</span><br><span class="line">        [ <span class="number">4.4842e-44</span>,  <span class="number">1.5554e-43</span>,  <span class="number">1.5975e-43</span>]])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = torch.rand(<span class="number">5</span>,<span class="number">3</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(x)</span><br><span class="line">tensor([[<span class="number">0.3380</span>, <span class="number">0.3845</span>, <span class="number">0.3217</span>],</span><br><span class="line">        [<span class="number">0.8337</span>, <span class="number">0.9050</span>, <span class="number">0.2650</span>],</span><br><span class="line">        [<span class="number">0.2979</span>, <span class="number">0.7141</span>, <span class="number">0.9069</span>],</span><br><span class="line">        [<span class="number">0.1449</span>, <span class="number">0.1132</span>, <span class="number">0.1375</span>],</span><br><span class="line">        [<span class="number">0.4675</span>, <span class="number">0.3947</span>, <span class="number">0.1426</span>]])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = torch.zeros(<span class="number">5</span>,<span class="number">3</span>,dtype=torch.long)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(x)</span><br><span class="line">tensor([[<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>],</span><br><span class="line">        [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>],</span><br><span class="line">        [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>],</span><br><span class="line">        [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>],</span><br><span class="line">        [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]])</span><br></pre></td></tr></table></figure></p>
+<p>当然也可以直接用数据建立一个tensor。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = torch.tensor([<span class="number">5.5</span>,<span class="number">3</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(x)</span><br><span class="line">tensor([<span class="number">5.5000</span>, <span class="number">3.0000</span>])</span><br></pre></td></tr></table></figure></p>
+<p>或是根据现有张量创建张量。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = x.new_ones(<span class="number">5</span>,<span class="number">3</span>,dtype=torch.double) <span class="comment"># 若不提供新属性则重用原属性</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(x) </span><br><span class="line">tensor([[<span class="number">1.</span>, <span class="number">1.</span>, <span class="number">1.</span>],</span><br><span class="line">        [<span class="number">1.</span>, <span class="number">1.</span>, <span class="number">1.</span>],</span><br><span class="line">        [<span class="number">1.</span>, <span class="number">1.</span>, <span class="number">1.</span>],</span><br><span class="line">        [<span class="number">1.</span>, <span class="number">1.</span>, <span class="number">1.</span>],</span><br><span class="line">        [<span class="number">1.</span>, <span class="number">1.</span>, <span class="number">1.</span>]], dtype=torch.float64)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = torch.randn_like(x,dtype=torch.float) <span class="comment"># 保留x大小</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(x)</span><br><span class="line">tensor([[<span class="number">-0.2080</span>,  <span class="number">1.5288</span>, <span class="number">-1.8337</span>],</span><br><span class="line">        [ <span class="number">1.3006</span>,  <span class="number">0.9401</span>, <span class="number">-2.4675</span>],</span><br><span class="line">        [ <span class="number">0.6897</span>, <span class="number">-0.4666</span>,  <span class="number">2.5578</span>],</span><br><span class="line">        [ <span class="number">1.1115</span>,  <span class="number">0.1749</span>, <span class="number">-0.0959</span>],</span><br><span class="line">        [ <span class="number">0.7542</span>, <span class="number">-0.2380</span>,  <span class="number">0.0408</span>]])</span><br></pre></td></tr></table></figure></p>
+<p>创建的张量可以查看其大小。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(x.size())</span><br><span class="line">torch.Size([<span class="number">5</span>,<span class="number">3</span>])</span><br></pre></td></tr></table></figure></p>
+<h2 id="Tensors基础操作"><a href="#Tensors基础操作" class="headerlink" title="Tensors基础操作"></a>Tensors基础操作</h2><p>为运算提供一个输出。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>y = torch.rand(<span class="number">5</span>,<span class="number">3</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>result = torch.empty(<span class="number">5</span>,<span class="number">3</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>torch.add(x,y,out=result)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(result)</span><br><span class="line">tensor([[ <span class="number">0.7890</span>,  <span class="number">1.9319</span>, <span class="number">-1.2865</span>],</span><br><span class="line">        [ <span class="number">1.3956</span>,  <span class="number">1.4262</span>, <span class="number">-2.3513</span>],</span><br><span class="line">        [ <span class="number">0.9005</span>,  <span class="number">0.4398</span>,  <span class="number">3.3741</span>],</span><br><span class="line">        [ <span class="number">1.4076</span>,  <span class="number">0.3860</span>, <span class="number">-0.0404</span>],</span><br><span class="line">        [ <span class="number">0.8079</span>,  <span class="number">0.0838</span>,  <span class="number">0.1361</span>]])</span><br></pre></td></tr></table></figure></p>
+<p>就地执行操作时，可以用后置下划线（”_”）就地调整张量。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>y.add_(x)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(y)</span><br><span class="line">tensor([[ <span class="number">0.7890</span>,  <span class="number">1.9319</span>, <span class="number">-1.2865</span>],</span><br><span class="line">        [ <span class="number">1.3956</span>,  <span class="number">1.4262</span>, <span class="number">-2.3513</span>],</span><br><span class="line">        [ <span class="number">0.9005</span>,  <span class="number">0.4398</span>,  <span class="number">3.3741</span>],</span><br><span class="line">        [ <span class="number">1.4076</span>,  <span class="number">0.3860</span>, <span class="number">-0.0404</span>],</span><br><span class="line">        [ <span class="number">0.8079</span>,  <span class="number">0.0838</span>,  <span class="number">0.1361</span>]])</span><br></pre></td></tr></table></figure></p>
+<p>tensor也有很多类似NumPy的操作，例如检索。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(x[:,<span class="number">1</span>])</span><br><span class="line">tensor([ <span class="number">1.5288</span>,  <span class="number">0.9401</span>, <span class="number">-0.4666</span>,  <span class="number">0.1749</span>, <span class="number">-0.2380</span>])</span><br></pre></td></tr></table></figure></p>
+<p>当需要调整tensor时，会用到一个重要的功能torch.view。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = torch.randn(<span class="number">4</span>,<span class="number">4</span>) <span class="comment"># 标准正态分布的随机量</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>y = x.view(<span class="number">16</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>z = x.view(<span class="number">-1</span>,<span class="number">8</span>) <span class="comment"># 根据其余维调整-1所在维</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(x.size(),y.size(),z.size())</span><br><span class="line">torch.Size([<span class="number">4</span>, <span class="number">4</span>]) torch.Size([<span class="number">16</span>]) torch.Size([<span class="number">2</span>, <span class="number">8</span>])</span><br></pre></td></tr></table></figure></p>
+<p>当tensor中只含有一个元素时，可以用.item()方法取值。注意和字典经常用到的items()有所不同。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = torch.randn(<span class="number">1</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(x)</span><br><span class="line">tensor([<span class="number">0.5191</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(x.item())</span><br><span class="line"><span class="number">0.5191271305084229</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="Torch-Tensor和NumPy-Array的相互转换"><a href="#Torch-Tensor和NumPy-Array的相互转换" class="headerlink" title="Torch Tensor和NumPy Array的相互转换"></a>Torch Tensor和NumPy Array的相互转换</h2><p>tensor转array，可以用.numpy()。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = torch.ones(<span class="number">5</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(a)</span><br><span class="line">tensor([<span class="number">1.</span>, <span class="number">1.</span>, <span class="number">1.</span>, <span class="number">1.</span>, <span class="number">1.</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b = a.numpy()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(b)</span><br><span class="line">[<span class="number">1.</span> <span class="number">1.</span> <span class="number">1.</span> <span class="number">1.</span> <span class="number">1.</span>]</span><br></pre></td></tr></table></figure></p>
+<p>array转tensor，可以用torch.from_numpy()。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = np.ones(<span class="number">5</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b = torch.from_numpy(a)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>np.add(a,<span class="number">1</span>,out=a)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(a)</span><br><span class="line">[<span class="number">2.</span> <span class="number">2.</span> <span class="number">2.</span> <span class="number">2.</span> <span class="number">2.</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(b) <span class="comment"># 当a变换时b也跟着变换</span></span><br><span class="line">tensor([<span class="number">2.</span>, <span class="number">2.</span>, <span class="number">2.</span>, <span class="number">2.</span>, <span class="number">2.</span>], dtype=torch.float64)</span><br></pre></td></tr></table></figure></p>
+<h2 id="CUDA-Tensors"><a href="#CUDA-Tensors" class="headerlink" title="CUDA Tensors"></a>CUDA Tensors</h2><p>tensors可以通过.to移入任何设备。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">...		device = torch.device(<span class="string">"cuda"</span>)  <span class="comment"># 一个CUDA设备对象</span></span><br><span class="line">...		y = torch.ones_like(x,device=device)  <span class="comment"># 直接在gpu上建立tensor</span></span><br><span class="line">...		x = x.to(device) <span class="comment"># 或者用.to("cuda")移入gpu</span></span><br><span class="line">...		z = x + y</span><br><span class="line">...		print(z)</span><br><span class="line">...		print(z.to(<span class="string">"cpu"</span>,torch.double)) <span class="comment"># 移入cpu，改变类型</span></span><br><span class="line">...</span><br><span class="line">tensor([<span class="number">1.5191</span>], device=<span class="string">'cuda:0'</span>)</span><br><span class="line">tensor([<span class="number">1.5191</span>], dtype=torch.float64)</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Pytorch/" rel="tag"># Pytorch</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/02/ESPnet-Learning-2/" rel="next" title="ESPnet Learning(2)：资源文件">
+                <i class="fa fa-chevron-left"></i> ESPnet Learning(2)：资源文件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">WANG Wenbo</p>
+              <p class="site-description motion-element" itemprop="description">Hello, I'm Oubunhaku</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是Pytorch"><span class="nav-number">1.</span> <span class="nav-text">什么是Pytorch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tensors"><span class="nav-number">2.</span> <span class="nav-text">Tensors</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tensors基础操作"><span class="nav-number">3.</span> <span class="nav-text">Tensors基础操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Torch-Tensor和NumPy-Array的相互转换"><span class="nav-number">4.</span> <span class="nav-text">Torch Tensor和NumPy Array的相互转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CUDA-Tensors"><span class="nav-number">5.</span> <span class="nav-text">CUDA Tensors</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WANG Wenbo</span>
+
+  
+</div>
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_uv">Visitors: <span id="busuanzi_value_site_uv"></span></span>
+    <span class="post-meta-divider">|</span>
+
+
+
+
+
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
