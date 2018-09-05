@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="PyTorch," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="神经网络在了解了tensor和autograd后，我们可以来搭建一个简单的神经网络了。PyTorch使用torch.nn包构建神经网络，它依赖于autograd来定义模型并求导。nn.Module包含多层，以及从输入开始并返回输出的前向传播方法。">
+<meta name="keywords" content="PyTorch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PyTorch Beginner 3：PyTorch头脑风暴(3)">
+<meta property="og:url" content="http://yoursite.com/2018/09/05/Pytorch-3/index.html">
+<meta property="og:site_name" content="Oubunhaku">
+<meta property="og:description" content="神经网络在了解了tensor和autograd后，我们可以来搭建一个简单的神经网络了。PyTorch使用torch.nn包构建神经网络，它依赖于autograd来定义模型并求导。nn.Module包含多层，以及从输入开始并返回输出的前向传播方法。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-09-05T07:28:34.086Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PyTorch Beginner 3：PyTorch头脑风暴(3)">
+<meta name="twitter:description" content="神经网络在了解了tensor和autograd后，我们可以来搭建一个简单的神经网络了。PyTorch使用torch.nn包构建神经网络，它依赖于autograd来定义模型并求导。nn.Module包含多层，以及从输入开始并返回输出的前向传播方法。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/05/Pytorch-3/"/>
+
+
+
+
+
+  <title>PyTorch Beginner 3：PyTorch头脑风暴(3) | Oubunhaku</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Oubunhaku</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Better Tomorrow</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/05/Pytorch-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WANG Wenbo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Oubunhaku">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">PyTorch Beginner 3：PyTorch头脑风暴(3)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-05T15:08:31+09:00">
+                2018-09-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PyTorch/" itemprop="url" rel="index">
+                    <span itemprop="name">PyTorch</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h2><p>在了解了tensor和autograd后，我们可以来搭建一个简单的神经网络了。PyTorch使用torch.nn包构建神经网络，它依赖于autograd来定义模型并求导。nn.Module包含多层，以及从输入开始并返回输出的前向传播方法。<br><a id="more"></a><br>一个典型的神经网络计算通常包括以下几步：<br>1.定义具有一些可学习参数（或权重）的神经网络<br>2.迭代输入数据集<br>3.通过网络处理输入<br>4.计算损失函数<br>5.反向传播，将梯度传回网络的参数<br>6.更新网络权重，例如：weight = weight - learning_rate * gradient</p>
+<h3 id="定义网络"><a href="#定义网络" class="headerlink" title="定义网络"></a>定义网络</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Net</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        super(Net, self).__init__()</span><br><span class="line">        <span class="comment"># 1 input image channel, 6 output channels, 5x5 square convolution kernel</span></span><br><span class="line">        self.conv1 = nn.Conv2d(<span class="number">1</span>, <span class="number">6</span>, <span class="number">5</span>)</span><br><span class="line">        self.conv2 = nn.Conv2d(<span class="number">6</span>, <span class="number">16</span>, <span class="number">5</span>)</span><br><span class="line">        <span class="comment"># an affine operation: y = Wx + b</span></span><br><span class="line">        self.fc1 = nn.Linear(<span class="number">16</span> * <span class="number">5</span> * <span class="number">5</span>, <span class="number">120</span>)</span><br><span class="line">        self.fc2 = nn.Linear(<span class="number">120</span>, <span class="number">84</span>)</span><br><span class="line">        self.fc3 = nn.Linear(<span class="number">84</span>, <span class="number">10</span>)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        <span class="comment"># Max pooling over a (2, 2) window</span></span><br><span class="line">        x = F.max_pool2d(F.relu(self.conv1(x)), (<span class="number">2</span>, <span class="number">2</span>))</span><br><span class="line">        <span class="comment"># If the size is a square you can only specify a single number</span></span><br><span class="line">        x = F.max_pool2d(F.relu(self.conv2(x)), <span class="number">2</span>)</span><br><span class="line">        x = x.view(<span class="number">-1</span>, self.num_flat_features(x))</span><br><span class="line">        x = F.relu(self.fc1(x))</span><br><span class="line">        x = F.relu(self.fc2(x))</span><br><span class="line">        x = self.fc3(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">num_flat_features</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        size = x.size()[<span class="number">1</span>:]  <span class="comment"># all dimensions except the batch dimension</span></span><br><span class="line">        num_features = <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> s <span class="keyword">in</span> size:</span><br><span class="line">            num_features *= s</span><br><span class="line">        <span class="keyword">return</span> num_features</span><br><span class="line"></span><br><span class="line">net = Net()</span><br><span class="line">print(net)</span><br></pre></td></tr></table></figure>
+<p>Out：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Net(</span><br><span class="line">  (conv1): Conv2d(1, 6, kernel_size=(5, 5), stride=(1, 1))</span><br><span class="line">  (conv2): Conv2d(6, 16, kernel_size=(5, 5), stride=(1, 1))</span><br><span class="line">  (fc1): Linear(in_features=400, out_features=120, bias=True)</span><br><span class="line">  (fc2): Linear(in_features=120, out_features=84, bias=True)</span><br><span class="line">  (fc3): Linear(in_features=84, out_features=10, bias=True)</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>我们只要定义forward函数并利用autograd模块，backward就可以自动被定义并计算梯度。<br>在定义好的网络中可以用net.parameters()返回模型的可学习参数。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>params = list(net.parameters())</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(len(params))</span><br><span class="line"><span class="number">10</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(params[<span class="number">0</span>].size()) </span><br><span class="line">torch.Size([<span class="number">6</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">5</span>])</span><br></pre></td></tr></table></figure></p>
+<p>让我们尝试随机32x32输入。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>input = torch.randn(<span class="number">1</span>,<span class="number">1</span>,<span class="number">32</span>,<span class="number">32</span>) <span class="comment"># batch size=1,ch=1,h=32,w=32</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>out = net(input)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(out)</span><br><span class="line">tensor([[ <span class="number">0.0632</span>, <span class="number">-0.0927</span>,  <span class="number">0.0313</span>,  <span class="number">0.1210</span>, <span class="number">-0.1443</span>,  <span class="number">0.0377</span>, <span class="number">-0.0187</span>,  <span class="number">0.0484</span>,</span><br><span class="line">          <span class="number">0.0672</span>, <span class="number">-0.0668</span>]], grad_fn=&lt;ThAddmmBackward&gt;)</span><br></pre></td></tr></table></figure></p>
+<p>清零所有参数的梯度缓冲区并以随机梯度反向传播。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">net.zero_grad()</span><br><span class="line">out.backward(torch.randn(<span class="number">1</span>,<span class="number">10</span>))</span><br></pre></td></tr></table></figure></p>
+<p>从<a href="https://pytorch.org/docs/stable/nn.html" target="_blank" rel="noopener">PyTorch documentation</a>中可以查找各种模块使用方法。</p>
+<h4 id="torch-nn-Conv2d"><a href="#torch-nn-Conv2d" class="headerlink" title="torch.nn.Conv2d"></a>torch.nn.Conv2d</h4><p>Conv2d(in_channels, out_channels, kernel_size, stride=1, padding=0, dilation=1, groups=1, bias=True)</p>
+<ul>
+<li>kernel_size：为int或tuple，kernel_size=5表示5x5方形卷积核。</li>
+<li>dilation：控制内核点之间的间距，可以扩大局部感知野</li>
+<li>Input：(N,Cin,Hin,Win)，其中N表示Batch size大小，C为通道数，H为高度，W为宽度。</li>
+<li>Output：(N,Cout,Hout,Wout)</li>
+</ul>
+<h4 id="torch-nn-Linear"><a href="#torch-nn-Linear" class="headerlink" title="torch.nn.Linear"></a>torch.nn.Linear</h4><p>Linear(in_features, out_features, bias=True)<br>对传入数据应用线性转换：y = Wx + b。</p>
+<ul>
+<li>in_features：每个输入样本的大小。</li>
+<li>out_features：每个输出样本的大小。</li>
+<li>Input：(N,<em>,in_features)，其中</em>表示任意数量的附加尺寸。</li>
+<li>Output：(N,*,out_features)，除了最后一个维度之外的所有维度都与输入的形状相同。</li>
+</ul>
+<h4 id="torch-nn-functional-max-pool2d"><a href="#torch-nn-functional-max-pool2d" class="headerlink" title="torch.nn.functional.max_pool2d"></a>torch.nn.functional.max_pool2d</h4><p>max_pool2d(input, kernel_size, stride=None, padding=0, dilation=1, ceil_mode=False, return_indices=False)</p>
+<ul>
+<li>return_indices：如果为True，将返回最大索引以及输出。</li>
+<li>ceil_mode：当为True时，将使用ceil而不是floor来计算输出形状。</li>
+<li>Input：(N,Cin,Hin,Win)</li>
+<li>Output：(N,Cout,Hout,Wout)</li>
+</ul>
+<h3 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h3><p>损失函数采用（输出，目标）输入对，并计算估计输出距目标的距离的值。torch.nn包下有几种不同的损失函数。一个简单的损失是：nn.MSELoss，它计算输入和目标之间的均方误差。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>output = net(input)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>target = torch.randn(<span class="number">10</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>target = target.view(<span class="number">1</span>,<span class="number">-1</span>) <span class="comment"># 改变为与输出相同的形状</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>criterion = nn.MSELoss()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>loss = criterion(output, target)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(loss)</span><br><span class="line">tensor(<span class="number">2.0210</span>, grad_fn=&lt;MseLossBackward&gt;)</span><br></pre></td></tr></table></figure></p>
+<h3 id="反向传播"><a href="#反向传播" class="headerlink" title="反向传播"></a>反向传播</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>net.zero_grad()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(net.conv1.bias.grad)</span><br><span class="line">tensor([<span class="number">0.</span>, <span class="number">0.</span>, <span class="number">0.</span>, <span class="number">0.</span>, <span class="number">0.</span>, <span class="number">0.</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>loss.backward()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(net.conv1.bias.grad)</span><br><span class="line">tensor([<span class="number">-0.0113</span>, <span class="number">-0.0000</span>, <span class="number">-0.0012</span>,  <span class="number">0.0147</span>, <span class="number">-0.0047</span>,  <span class="number">0.0065</span>])</span><br></pre></td></tr></table></figure>
+<h3 id="更新权重"><a href="#更新权重" class="headerlink" title="更新权重"></a>更新权重</h3><p>实践中使用的最简单的更新规则是随机梯度下降（SGD）：<br>weight = weight - learning_rate * gradient<br>我们可以使用简单的python代码实现它。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">learning_rate = <span class="number">0.01</span></span><br><span class="line"><span class="keyword">for</span> f <span class="keyword">in</span> net.parameters():</span><br><span class="line">    f.data.sub_(f.grad.data * learning_rate) <span class="comment"># 同样这里sub_表示就地做减法</span></span><br></pre></td></tr></table></figure></p>
+<p>当使用神经网络时，我们希望使用各种不同的更新规则，例如SGD，Nesterov-SGD，Adam，RMSProp等。为了实现这一点，PyTorch构建了一个小包：torch.optim，它实现了所有这些方法。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch.optim <span class="keyword">as</span> optim</span><br><span class="line"><span class="comment"># 建立优化器</span></span><br><span class="line">optimizer = optim.SGD(net.parameters(),lr=<span class="number">0.01</span>)</span><br><span class="line"><span class="comment"># 训练中</span></span><br><span class="line">optimizer.zero_grad() <span class="comment"># 清零梯度缓冲区</span></span><br><span class="line">output = net(input) <span class="comment"># 前向传播</span></span><br><span class="line">loss = criterion(output,target) <span class="comment"># 计算损失函数</span></span><br><span class="line">loss.backward() <span class="comment"># 反向传播</span></span><br><span class="line">optimizer.step() <span class="comment"># 更新权重</span></span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PyTorch/" rel="tag"># PyTorch</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/05/Pytorch-2/" rel="next" title="PyTorch Beginner 2：PyTorch头脑风暴(2)">
+                <i class="fa fa-chevron-left"></i> PyTorch Beginner 2：PyTorch头脑风暴(2)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">WANG Wenbo</p>
+              <p class="site-description motion-element" itemprop="description">Hello, I'm Oubunhaku</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#神经网络"><span class="nav-number">1.</span> <span class="nav-text">神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义网络"><span class="nav-number">1.1.</span> <span class="nav-text">定义网络</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#torch-nn-Conv2d"><span class="nav-number">1.1.1.</span> <span class="nav-text">torch.nn.Conv2d</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#torch-nn-Linear"><span class="nav-number">1.1.2.</span> <span class="nav-text">torch.nn.Linear</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#torch-nn-functional-max-pool2d"><span class="nav-number">1.1.3.</span> <span class="nav-text">torch.nn.functional.max_pool2d</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#损失函数"><span class="nav-number">1.2.</span> <span class="nav-text">损失函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反向传播"><span class="nav-number">1.3.</span> <span class="nav-text">反向传播</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更新权重"><span class="nav-number">1.4.</span> <span class="nav-text">更新权重</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WANG Wenbo</span>
+
+  
+</div>
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_uv">Visitors: <span id="busuanzi_value_site_uv"></span></span>
+    <span class="post-meta-divider">|</span>
+
+
+
+
+
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
