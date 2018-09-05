@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="ASR," />
+  <meta name="keywords" content="PyTorch," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="I’m Oubunhaku, from now, I’ll start recording my ESPnet learning. 什么是 ESPnet?根据ESPnet网站上的解释，ESPnet是一个端到端的语音处理工具包，主要侧重于端到端语音识别和端到端的文本到语音转换。 ESPnet使用chainer和pytorch作为主要的深度学习引擎，并遵循Kaldi风格的data processing">
-<meta name="keywords" content="ASR">
+<meta name="description" content="自动求导autogradPyTorch中所有神经网络的核心是autograd包。autograd软件包为tensors上的所有操作提供自动求导。如果将tensor的属性.requires_grad设置为True，则会开始跟踪tensor上的所有操作。 完成计算后，调用.backward()并自动计算所有梯度。">
+<meta name="keywords" content="PyTorch">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ESPnet Learning(1)：认识与安装">
-<meta property="og:url" content="http://yoursite.com/2018/09/02/ESPnet-Learning-1/index.html">
+<meta property="og:title" content="PyTorch Beginner 2：PyTorch头脑风暴(2)">
+<meta property="og:url" content="http://yoursite.com/2018/09/05/Pytorch-2/index.html">
 <meta property="og:site_name" content="Oubunhaku">
-<meta property="og:description" content="I’m Oubunhaku, from now, I’ll start recording my ESPnet learning. 什么是 ESPnet?根据ESPnet网站上的解释，ESPnet是一个端到端的语音处理工具包，主要侧重于端到端语音识别和端到端的文本到语音转换。 ESPnet使用chainer和pytorch作为主要的深度学习引擎，并遵循Kaldi风格的data processing">
+<meta property="og:description" content="自动求导autogradPyTorch中所有神经网络的核心是autograd包。autograd软件包为tensors上的所有操作提供自动求导。如果将tensor的属性.requires_grad设置为True，则会开始跟踪tensor上的所有操作。 完成计算后，调用.backward()并自动计算所有梯度。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-09-03T11:19:19.495Z">
+<meta property="og:updated_time" content="2018-09-05T05:45:47.835Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ESPnet Learning(1)：认识与安装">
-<meta name="twitter:description" content="I’m Oubunhaku, from now, I’ll start recording my ESPnet learning. 什么是 ESPnet?根据ESPnet网站上的解释，ESPnet是一个端到端的语音处理工具包，主要侧重于端到端语音识别和端到端的文本到语音转换。 ESPnet使用chainer和pytorch作为主要的深度学习引擎，并遵循Kaldi风格的data processing">
+<meta name="twitter:title" content="PyTorch Beginner 2：PyTorch头脑风暴(2)">
+<meta name="twitter:description" content="自动求导autogradPyTorch中所有神经网络的核心是autograd包。autograd软件包为tensors上的所有操作提供自动求导。如果将tensor的属性.requires_grad设置为True，则会开始跟踪tensor上的所有操作。 完成计算后，调用.backward()并自动计算所有梯度。">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/09/02/ESPnet-Learning-1/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/09/05/Pytorch-2/"/>
 
 
 
 
 
-  <title>ESPnet Learning(1)：认识与安装 | Oubunhaku</title>
+  <title>PyTorch Beginner 2：PyTorch头脑风暴(2) | Oubunhaku</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/02/ESPnet-Learning-1/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/05/Pytorch-2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="WANG Wenbo">
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">ESPnet Learning(1)：认识与安装</h1>
+          <h1 class="post-title" itemprop="name headline">PyTorch Beginner 2：PyTorch头脑风暴(2)</h1>
         
 
         <div class="post-meta">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-02T12:35:51+09:00">
-                2018-09-02
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-05T14:34:44+09:00">
+                2018-09-05
               </time>
             
 
@@ -315,8 +315,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ESPnet-Learning/" itemprop="url" rel="index">
-                    <span itemprop="name">ESPnet Learning</span>
+                  <a href="/categories/PyTorch/" itemprop="url" rel="index">
+                    <span itemprop="name">PyTorch</span>
                   </a>
                 </span>
 
@@ -352,10 +352,7 @@
       
 
       
-        <p>I’m Oubunhaku, from now, I’ll start recording my <a href="https://github.com/Oubunhaku/espnet" target="_blank" rel="noopener">ESPnet</a> learning.</p>
-<h2 id="什么是-ESPnet"><a href="#什么是-ESPnet" class="headerlink" title="什么是 ESPnet?"></a>什么是 ESPnet?</h2><p>根据<a href="https://github.com/Oubunhaku/espnet" target="_blank" rel="noopener">ESPnet</a>网站上的解释，ESPnet是一个端到端的语音处理工具包，主要侧重于端到端语音识别和端到端的文本到语音转换。 ESPnet使用<a href="https://docs.chainer.org/en/stable/index.html" target="_blank" rel="noopener">chainer</a>和<a href="https://pytorch.org/docs/stable/index.html#" target="_blank" rel="noopener">pytorch</a>作为主要的深度学习引擎，并遵循Kaldi风格的data processing, feature extraction/format和recipes，为语音识别和其他语音处理实验提供完整的设置。ESPnet主要在混合CTC/Attention架构上进行语音识别。</p>
-<p><font color="ff0000">More info: <a href="https://github.com/Oubunhaku/espnet" target="_blank" rel="noopener">ESPnet</a></font><br><a id="more"></a></p>
-<h2 id="下载与安装-ESPnet"><a href="#下载与安装-ESPnet" class="headerlink" title="下载与安装 ESPnet"></a>下载与安装 ESPnet</h2><p>你可以直接参考<a href="https://github.com/Oubunhaku/espnet" target="_blank" rel="noopener">ESPnet</a>网站上的下载安装指南，或是参考我总结的文章<a href="../../../../images/ExecuteESPnet.pdf">Execute CHiME-5 Baseline in ESPnet</a>。当你保证各种要求的库全部安装完毕且各种路径设置正确，你就可以开始跑你的第一个ESPnet recipe了。随便进入一个语音库的目录中，按照如下命令运行试试看。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./run.sh --backend chainer</span><br></pre></td></tr></table></figure></p>
+        <h2 id="自动求导autograd"><a href="#自动求导autograd" class="headerlink" title="自动求导autograd"></a>自动求导autograd</h2><p>PyTorch中所有神经网络的核心是autograd包。autograd软件包为tensors上的所有操作提供自动求导。如果将tensor的属性.requires_grad设置为True，则会开始跟踪tensor上的所有操作。 完成计算后，调用.backward()并自动计算所有梯度。<br><a id="more"></a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import torch</span><br><span class="line">&gt;&gt;&gt; x = torch.ones(2)</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -373,7 +370,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/ASR/" rel="tag"># ASR</a>
+            <a href="/tags/PyTorch/" rel="tag"># PyTorch</a>
           
         </div>
       
@@ -386,15 +383,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/09/05/Pytorch-1/" rel="next" title="PyTorch Beginner 1：PyTorch头脑风暴(1)">
+                <i class="fa fa-chevron-left"></i> PyTorch Beginner 1：PyTorch头脑风暴(1)
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/09/02/ESPnet-Learning-2/" rel="prev" title="ESPnet Learning(2)：资源文件">
-                ESPnet Learning(2)：资源文件 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -526,7 +523,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是-ESPnet"><span class="nav-number">1.</span> <span class="nav-text">什么是 ESPnet?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载与安装-ESPnet"><span class="nav-number">2.</span> <span class="nav-text">下载与安装 ESPnet</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#自动求导autograd"><span class="nav-number">1.</span> <span class="nav-text">自动求导autograd</span></a></li></ol></div>
             
 
           </div>

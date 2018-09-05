@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Pytorch," />
+  <meta name="keywords" content="PyTorch," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="今天会开始详细介绍pytorch从入门到高阶。PyTorch是使用GPU和CPU优化的深度学习张量库。文章主要参考Pytorch官网。">
-<meta name="keywords" content="Pytorch">
+<meta name="description" content="今天会开始详细介绍PyTorch从入门到高阶。PyTorch是使用GPU和CPU优化的深度学习张量库。文章主要参考PyTorch官网。">
+<meta name="keywords" content="PyTorch">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Pytorch Beginner 1：Pytorch头脑风暴(1)">
+<meta property="og:title" content="PyTorch Beginner 1：PyTorch头脑风暴(1)">
 <meta property="og:url" content="http://yoursite.com/2018/09/05/Pytorch-1/index.html">
 <meta property="og:site_name" content="Oubunhaku">
-<meta property="og:description" content="今天会开始详细介绍pytorch从入门到高阶。PyTorch是使用GPU和CPU优化的深度学习张量库。文章主要参考Pytorch官网。">
+<meta property="og:description" content="今天会开始详细介绍PyTorch从入门到高阶。PyTorch是使用GPU和CPU优化的深度学习张量库。文章主要参考PyTorch官网。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-09-05T05:28:28.961Z">
+<meta property="og:updated_time" content="2018-09-05T05:33:53.376Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Pytorch Beginner 1：Pytorch头脑风暴(1)">
-<meta name="twitter:description" content="今天会开始详细介绍pytorch从入门到高阶。PyTorch是使用GPU和CPU优化的深度学习张量库。文章主要参考Pytorch官网。">
+<meta name="twitter:title" content="PyTorch Beginner 1：PyTorch头脑风暴(1)">
+<meta name="twitter:description" content="今天会开始详细介绍PyTorch从入门到高阶。PyTorch是使用GPU和CPU优化的深度学习张量库。文章主要参考PyTorch官网。">
 
 
 
@@ -126,7 +126,7 @@
 
 
 
-  <title>Pytorch Beginner 1：Pytorch头脑风暴(1) | Oubunhaku</title>
+  <title>PyTorch Beginner 1：PyTorch头脑风暴(1) | Oubunhaku</title>
   
 
 
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Pytorch Beginner 1：Pytorch头脑风暴(1)</h1>
+          <h1 class="post-title" itemprop="name headline">PyTorch Beginner 1：PyTorch头脑风暴(1)</h1>
         
 
         <div class="post-meta">
@@ -315,8 +315,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Pytorch/" itemprop="url" rel="index">
-                    <span itemprop="name">Pytorch</span>
+                  <a href="/categories/PyTorch/" itemprop="url" rel="index">
+                    <span itemprop="name">PyTorch</span>
                   </a>
                 </span>
 
@@ -352,8 +352,8 @@
       
 
       
-        <p>今天会开始详细介绍<a href="https://pytorch.org/tutorials/index.html#" target="_blank" rel="noopener">pytorch</a>从入门到高阶。PyTorch是使用GPU和CPU优化的深度学习张量库。文章主要参考Pytorch官网。<br><a id="more"></a></p>
-<h2 id="什么是Pytorch"><a href="#什么是Pytorch" class="headerlink" title="什么是Pytorch"></a>什么是Pytorch</h2><p>从<a href="https://pytorch.org/tutorials/index.html#" target="_blank" rel="noopener">pytorch</a>官网中可以知道，它是基于Python的科学计算软件包，可以使用GPU的深入学习研究平台。</p>
+        <p>今天会开始详细介绍<a href="https://pytorch.org/tutorials/index.html#" target="_blank" rel="noopener">PyTorch</a>从入门到高阶。PyTorch是使用GPU和CPU优化的深度学习张量库。文章主要参考PyTorch官网。<br><a id="more"></a></p>
+<h2 id="什么是PyTorch"><a href="#什么是PyTorch" class="headerlink" title="什么是PyTorch"></a>什么是PyTorch</h2><p>从<a href="https://pytorch.org/tutorials/index.html#" target="_blank" rel="noopener">PyTorch</a>官网中可以知道，它是基于Python的科学计算软件包，可以使用GPU的深入学习研究平台。</p>
 <h2 id="Tensors"><a href="#Tensors" class="headerlink" title="Tensors"></a>Tensors</h2><p>Tensors类似于NumPy的ndarray，可用于GPU以加速计算。官网给出例子如下。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> torch</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = torch.empty(<span class="number">5</span>,<span class="number">3</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(x)</span><br><span class="line">tensor([[<span class="number">-5.0254e+18</span>,  <span class="number">4.5609e-41</span>, <span class="number">-5.0254e+18</span>],</span><br><span class="line">        [ <span class="number">4.5609e-41</span>,  <span class="number">1.6395e-43</span>,  <span class="number">1.3873e-43</span>],</span><br><span class="line">        [ <span class="number">1.4574e-43</span>,  <span class="number">4.4842e-44</span>,  <span class="number">1.4293e-43</span>],</span><br><span class="line">        [ <span class="number">1.4714e-43</span>,  <span class="number">1.5134e-43</span>,  <span class="number">1.4153e-43</span>],</span><br><span class="line">        [ <span class="number">4.4842e-44</span>,  <span class="number">1.5554e-43</span>,  <span class="number">1.5975e-43</span>]])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = torch.rand(<span class="number">5</span>,<span class="number">3</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(x)</span><br><span class="line">tensor([[<span class="number">0.3380</span>, <span class="number">0.3845</span>, <span class="number">0.3217</span>],</span><br><span class="line">        [<span class="number">0.8337</span>, <span class="number">0.9050</span>, <span class="number">0.2650</span>],</span><br><span class="line">        [<span class="number">0.2979</span>, <span class="number">0.7141</span>, <span class="number">0.9069</span>],</span><br><span class="line">        [<span class="number">0.1449</span>, <span class="number">0.1132</span>, <span class="number">0.1375</span>],</span><br><span class="line">        [<span class="number">0.4675</span>, <span class="number">0.3947</span>, <span class="number">0.1426</span>]])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = torch.zeros(<span class="number">5</span>,<span class="number">3</span>,dtype=torch.long)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(x)</span><br><span class="line">tensor([[<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>],</span><br><span class="line">        [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>],</span><br><span class="line">        [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>],</span><br><span class="line">        [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>],</span><br><span class="line">        [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]])</span><br></pre></td></tr></table></figure></p>
 <p>当然也可以直接用数据建立一个tensor。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = torch.tensor([<span class="number">5.5</span>,<span class="number">3</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(x)</span><br><span class="line">tensor([<span class="number">5.5000</span>, <span class="number">3.0000</span>])</span><br></pre></td></tr></table></figure></p>
 <p>或是根据现有张量创建张量。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = x.new_ones(<span class="number">5</span>,<span class="number">3</span>,dtype=torch.double) <span class="comment"># 若不提供新属性则重用原属性</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(x) </span><br><span class="line">tensor([[<span class="number">1.</span>, <span class="number">1.</span>, <span class="number">1.</span>],</span><br><span class="line">        [<span class="number">1.</span>, <span class="number">1.</span>, <span class="number">1.</span>],</span><br><span class="line">        [<span class="number">1.</span>, <span class="number">1.</span>, <span class="number">1.</span>],</span><br><span class="line">        [<span class="number">1.</span>, <span class="number">1.</span>, <span class="number">1.</span>],</span><br><span class="line">        [<span class="number">1.</span>, <span class="number">1.</span>, <span class="number">1.</span>]], dtype=torch.float64)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = torch.randn_like(x,dtype=torch.float) <span class="comment"># 保留x大小</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(x)</span><br><span class="line">tensor([[<span class="number">-0.2080</span>,  <span class="number">1.5288</span>, <span class="number">-1.8337</span>],</span><br><span class="line">        [ <span class="number">1.3006</span>,  <span class="number">0.9401</span>, <span class="number">-2.4675</span>],</span><br><span class="line">        [ <span class="number">0.6897</span>, <span class="number">-0.4666</span>,  <span class="number">2.5578</span>],</span><br><span class="line">        [ <span class="number">1.1115</span>,  <span class="number">0.1749</span>, <span class="number">-0.0959</span>],</span><br><span class="line">        [ <span class="number">0.7542</span>, <span class="number">-0.2380</span>,  <span class="number">0.0408</span>]])</span><br></pre></td></tr></table></figure></p>
@@ -365,7 +365,7 @@
 <p>当tensor中只含有一个元素时，可以用.item()方法取值。注意和字典经常用到的items()有所不同。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = torch.randn(<span class="number">1</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(x)</span><br><span class="line">tensor([<span class="number">0.5191</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(x.item())</span><br><span class="line"><span class="number">0.5191271305084229</span></span><br></pre></td></tr></table></figure></p>
 <h2 id="Torch-Tensor和NumPy-Array的相互转换"><a href="#Torch-Tensor和NumPy-Array的相互转换" class="headerlink" title="Torch Tensor和NumPy Array的相互转换"></a>Torch Tensor和NumPy Array的相互转换</h2><p>tensor转array，可以用.numpy()。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = torch.ones(<span class="number">5</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(a)</span><br><span class="line">tensor([<span class="number">1.</span>, <span class="number">1.</span>, <span class="number">1.</span>, <span class="number">1.</span>, <span class="number">1.</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b = a.numpy()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(b)</span><br><span class="line">[<span class="number">1.</span> <span class="number">1.</span> <span class="number">1.</span> <span class="number">1.</span> <span class="number">1.</span>]</span><br></pre></td></tr></table></figure></p>
 <p>array转tensor，可以用torch.from_numpy()。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = np.ones(<span class="number">5</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b = torch.from_numpy(a)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>np.add(a,<span class="number">1</span>,out=a)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(a)</span><br><span class="line">[<span class="number">2.</span> <span class="number">2.</span> <span class="number">2.</span> <span class="number">2.</span> <span class="number">2.</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(b) <span class="comment"># 当a变换时b也跟着变换</span></span><br><span class="line">tensor([<span class="number">2.</span>, <span class="number">2.</span>, <span class="number">2.</span>, <span class="number">2.</span>, <span class="number">2.</span>], dtype=torch.float64)</span><br></pre></td></tr></table></figure></p>
-<h2 id="CUDA-Tensors"><a href="#CUDA-Tensors" class="headerlink" title="CUDA Tensors"></a>CUDA Tensors</h2><p>tensors可以通过.to移入任何设备。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">...		device = torch.device(<span class="string">"cuda"</span>)  <span class="comment"># 一个CUDA设备对象</span></span><br><span class="line">...		y = torch.ones_like(x,device=device)  <span class="comment"># 直接在gpu上建立tensor</span></span><br><span class="line">...		x = x.to(device) <span class="comment"># 或者用.to("cuda")移入gpu</span></span><br><span class="line">...		z = x + y</span><br><span class="line">...		print(z)</span><br><span class="line">...		print(z.to(<span class="string">"cpu"</span>,torch.double)) <span class="comment"># 移入cpu，改变类型</span></span><br><span class="line">...</span><br><span class="line">tensor([<span class="number">1.5191</span>], device=<span class="string">'cuda:0'</span>)</span><br><span class="line">tensor([<span class="number">1.5191</span>], dtype=torch.float64)</span><br></pre></td></tr></table></figure></p>
+<h2 id="CUDA-Tensors"><a href="#CUDA-Tensors" class="headerlink" title="CUDA Tensors"></a>CUDA Tensors</h2><p>tensors可以通过.to移入任何设备。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line"><span class="meta">... </span>   device = torch.device(<span class="string">"cuda"</span>)  <span class="comment"># 一个CUDA设备对象</span></span><br><span class="line"><span class="meta">... </span>   y = torch.ones_like(x,device=device)  <span class="comment"># 直接在gpu上建立tensor</span></span><br><span class="line"><span class="meta">... </span>   x = x.to(device) <span class="comment"># 或者用.to("cuda")移入gpu</span></span><br><span class="line"><span class="meta">... </span>   z = x + y</span><br><span class="line"><span class="meta">... </span>   print(z)</span><br><span class="line"><span class="meta">... </span>   print(z.to(<span class="string">"cpu"</span>,torch.double)) <span class="comment"># 移入cpu，改变类型</span></span><br><span class="line">...</span><br><span class="line">tensor([<span class="number">1.5191</span>], device=<span class="string">'cuda:0'</span>)</span><br><span class="line">tensor([<span class="number">1.5191</span>], dtype=torch.float64)</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -383,7 +383,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Pytorch/" rel="tag"># Pytorch</a>
+            <a href="/tags/PyTorch/" rel="tag"># PyTorch</a>
           
         </div>
       
@@ -405,6 +405,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/05/Pytorch-2/" rel="prev" title="PyTorch Beginner 2：PyTorch头脑风暴(2)">
+                PyTorch Beginner 2：PyTorch头脑风暴(2) <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -481,7 +485,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -536,7 +540,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是Pytorch"><span class="nav-number">1.</span> <span class="nav-text">什么是Pytorch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tensors"><span class="nav-number">2.</span> <span class="nav-text">Tensors</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tensors基础操作"><span class="nav-number">3.</span> <span class="nav-text">Tensors基础操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Torch-Tensor和NumPy-Array的相互转换"><span class="nav-number">4.</span> <span class="nav-text">Torch Tensor和NumPy Array的相互转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CUDA-Tensors"><span class="nav-number">5.</span> <span class="nav-text">CUDA Tensors</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是PyTorch"><span class="nav-number">1.</span> <span class="nav-text">什么是PyTorch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tensors"><span class="nav-number">2.</span> <span class="nav-text">Tensors</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tensors基础操作"><span class="nav-number">3.</span> <span class="nav-text">Tensors基础操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Torch-Tensor和NumPy-Array的相互转换"><span class="nav-number">4.</span> <span class="nav-text">Torch Tensor和NumPy Array的相互转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CUDA-Tensors"><span class="nav-number">5.</span> <span class="nav-text">CUDA Tensors</span></a></li></ol></div>
             
 
           </div>
