@@ -355,7 +355,37 @@
       
         
           
-            <h2 id="训练分类器"><a href="#训练分类器" class="headerlink" title="训练分类器"></a>训练分类器</h2>
+            <h2 id="训练分类器"><a href="#训练分类器" class="headerlink" title="训练分类器"></a>训练分类器</h2><p>PyTorch对于视觉处理有一个专门的包，包括一些如MNIST等常见数据集的数据加载器，以及对于图像的数据转换器，torchvision.datasets和torch.utils.data.DataLoader。<br>官网以CIFAR10数据集为例，演示了多种物体的图像识别。CIFAR-10中的图像尺寸为3×32×32，即尺寸为32×32像素的3通道彩色图像。教程中按顺序执行以下步骤：<br>1.使用torchvision加载和标准化CIFAR10训练和测试数据集<br>2.定义卷积神经网络<br>3.定义损失函数<br>4.在训练数据上训练网络<br>5.在测试数据上测试网络</p>
+<h3 id="加载和标准化CIFAR10"><a href="#加载和标准化CIFAR10" class="headerlink" title="加载和标准化CIFAR10"></a>加载和标准化CIFAR10</h3><p>‘’’python<br>import torch<br>import torchvision<br>import torchvision.transforms as transforms</p>
+<p>transform = transforms.Compose( # 组合多个变换<br>    [transforms.ToTensor(), # 转换为张量<br>    transforms.Normalize((0.5,0.5,0.5),(0.5,0.5,0.5))]) # 正态分布的均值与方差</p>
+<p>trainset = torchvision.datasets.CIFAR10(root=’./data’,train=True, # 训练集<br>                                        download=True,transform=transform) # 数据转换方式<br>trainloder = torch.utils.data.DataLoader(trainset, batch_size=4,<br>                                        shuffle=True, num_workers=2) #数据加载的子进程数</p>
+<p>testset = torchvision.datasets.CIFAR10(root=’./data’, train=False, # 测试集<br>                                       download=True, transform=transform)<br>testloader = torch.utils.data.DataLoader(testset, batch_size=4,<br>                                         shuffle=False, num_workers=2)</p>
+<p>classes = (‘plane’, ‘car’, ‘bird’, ‘cat’,<br>           ‘deer’, ‘dog’, ‘frog’, ‘horse’, ‘ship’, ‘truck’)<br>‘’’</p>
+<h3 id="定义卷积神经网络"><a href="#定义卷积神经网络" class="headerlink" title="定义卷积神经网络"></a>定义卷积神经网络</h3><p>‘’’python<br>import torch.nn as nn<br>import torch.nn.functional as F</p>
+<p>class Net(nn.Module):<br>    def <strong>init</strong>(self):<br>        super(Net,self).<strong>init</strong>()<br>        self.conv1 = nn.Conv2d(3,6,5) # in_ch, out_ch, kernel_size=5<em>5<br>        self.pool = nn.MaxPool2d(2,2) # kernel_size=2</em>2, stride=2<br>        self.conv2 = nn.Conv2d(6,16,5)<br>        self.fc1 = nn.Linear(16<em>5</em>5,120) # in, out<br>        self.fc2 = nn.Linear(120,84)<br>        self.fc3 = nn.Linear(84,10) # out put class=10<br>    def forward(self,x):<br>        x = self.pool(F.relu(self.conv1(x)))<br>        x = self.pool(F.relu(self.conv2(x)))<br>        x = F.relu(self.fc1(x))<br>        x = F.relu(self.fc2(x))<br>        x = self.fc3(x)<br>        return x</p>
+<p>net = Net()<br>‘’’</p>
+<h3 id="定义损失函数"><a href="#定义损失函数" class="headerlink" title="定义损失函数"></a>定义损失函数</h3><p>‘’’python<br>import torch.optim as optim</p>
+<p>criterion = nn.CrossEntropyLoss()<br>optimizer = optim.SGD(net.parameters(),lr=0.001,momentum=0.9)<br>‘’’<br>Momentum的方法是在参数更新中加入动量项，对那些当前梯度与上次梯度相同的参数进行加强，反之削弱。这种方法可以获得更快收敛和较少振荡。</p>
+<h3 id="训练网络"><a href="#训练网络" class="headerlink" title="训练网络"></a>训练网络</h3><p>‘’’python<br>for epoch in range(2):</p>
+<pre><code>running_loss = 0.0
+for i,data in enumerate(trainloader,0):
+    inputs, labels = data
+    optimizer.zero_grad() # 梯度清零
+
+    outputs = net(input) # 前向传播
+    loss = criterion(outputs,labels) # 计算损失
+    loss.backward() # 反向传播
+    optimizer.step() # 参数更新
+
+    running_loss +=loss.item()
+    if i % 2000 == 1999: # 每2000个mini-batch 打印一次
+        print(&apos;[%d,%5d] loss: %.3f&apos; %(epoch + 1, i + 1, running_loss /2000))
+        running_loss = 0.0
+</code></pre><p>print(‘Finished Training’)<br>‘’’</p>
+<h3 id="测试网络"><a href="#测试网络" class="headerlink" title="测试网络"></a>测试网络</h3><p>‘’’python<br>correct = 0<br>total = 0<br>with torch.no_grad():<br>    for data in testloader:<br>        images, labels = data<br>        outputs = net(images)<br>        _, predicted = torch.max(outputs.data, 1) # 返回行最大值和最大值对应的位置<br>        total += labels.size(0)<br>        correct += (predicted == labels).sum().item()</p>
+<p>print(‘Accuracy of the network on the 10000 test images: %d %%’ % (<br>    100 * correct / total))<br>‘’’</p>
+<h3 id="在GPU上训练"><a href="#在GPU上训练" class="headerlink" title="在GPU上训练"></a>在GPU上训练</h3><p>‘’’python<br>device = torch.device(“cuda:0” if torch.cuda.is_available() else “cpu”)<br>net.to(device)<br>‘’’<br>必须将每一步的输入和目标发送到GPU。<br>‘’’python<br>inputs, labels = inputs.to(device), labels.to(device)<br>‘’’<br>至此你已经接受完了PyTorch头脑风暴的入门洗礼。</p>
+
           
         
       
