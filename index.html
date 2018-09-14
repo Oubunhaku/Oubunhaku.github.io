@@ -354,121 +354,14 @@
 
       
         
-          
-            <p>当经过前面PyTorch闪电战的入门洗礼，你已经具备了最基本PyTorch知识。而本章将继续介绍PyTorch的3大概念Tensors，Autograd和nn module，并以实例展示出来。教程原文请参考<a href="https://pytorch.org/tutorials/beginner/pytorch_with_examples.html#" target="_blank" rel="noopener">Learning PyTorch with Examples</a></p>
-<h2 id="Tensors"><a href="#Tensors" class="headerlink" title="Tensors"></a>Tensors</h2><h3 id="从numpy说起"><a href="#从numpy说起" class="headerlink" title="从numpy说起"></a>从numpy说起</h3><p>在了解PyTorch之前，相信很多人就已经对numpy不陌生了。Numpy是科学计算的通用框架，它具有应用的广泛性，但在深度学习中，它并未提供任何针对性设计。不过，我们仍然可以通过手动设计，实现网络的前向和后向传递，完成一个简单的深度网络。<br>‘’’python</p>
-<h1 id="coding-utf-8"><a href="#coding-utf-8" class="headerlink" title="-- coding: utf-8 --"></a>-<em>- coding: utf-8 -</em>-</h1><p>import numpy as np</p>
-<h1 id="N表示batch-size；D-in为输入维数；H为隐藏层维数；D-out为输出维数。"><a href="#N表示batch-size；D-in为输入维数；H为隐藏层维数；D-out为输出维数。" class="headerlink" title="N表示batch size；D_in为输入维数；H为隐藏层维数；D_out为输出维数。"></a>N表示batch size；D_in为输入维数；H为隐藏层维数；D_out为输出维数。</h1><p>N, D_in, H, D_out = 64, 1000, 100, 10</p>
-<h1 id="随机制造fake数据"><a href="#随机制造fake数据" class="headerlink" title="随机制造fake数据"></a>随机制造fake数据</h1><p>x = np.random.randn(N, D_in)<br>y = np.random.randn(N, D_out)</p>
-<h1 id="随机初始化权值"><a href="#随机初始化权值" class="headerlink" title="随机初始化权值"></a>随机初始化权值</h1><p>w1 = np.random.randn(D_in, H)<br>w2 = np.random.randn(H, D_out)</p>
-<h1 id="手动设置学习率"><a href="#手动设置学习率" class="headerlink" title="手动设置学习率"></a>手动设置学习率</h1><p>learning_rate = 1e-6</p>
-<h1 id="训练迭代"><a href="#训练迭代" class="headerlink" title="训练迭代"></a>训练迭代</h1><p>for t in range(500):</p>
-<pre><code># 前向传播
-h = x.dot(w1)
-h_relu = np.maximum(h, 0) # np.maxmun相当于ReLU函数
-y_pred = h_relu.dot(w2)
-
-# 计算损失
-loss = np.square(y_pred - y).sum()
-print(t, loss)
-
-# 反向传播为w1，w2计算梯度
-grad_y_pred = 2.0 * (y_pred - y)
-grad_w2 = h_relu.T.dot(grad_y_pred)
-grad_h_relu = grad_y_pred.dot(w2.T)
-grad_h = grad_h_relu.copy()
-grad_h[h &lt; 0] = 0
-grad_w1 = x.T.dot(grad_h)
-
-# 更新权值
-w1 -= learning_rate * grad_w1
-w2 -= learning_rate * grad_w2
-</code></pre><p>‘’’</p>
-<h3 id="PyTorch-Tensors"><a href="#PyTorch-Tensors" class="headerlink" title="PyTorch: Tensors"></a>PyTorch: Tensors</h3><p>Numpy是一个很棒的框架，但它不能利用GPU来加速其数值计算。对于现代深度神经网络，GPU通常提供50倍或更高的加速，所以不幸的是，numpy对于现代深度学习来说还不够。<br>PyTorch Tensor在概念上与numpy数组相同，它是一个n维数组，PyTorch提供了许多用于在这些Tensors上运算的函数。在幕后，Tensors可以跟踪计算图和梯度，但它们也可用作科学计算的通用工具。与numpy不同，Tensors可以利用GPU加速其数值计算。要在GPU上运行Tensor，只需将其转换为新的数据类型即可。<br>我们先向numpy那样手动设计网络前向和反向传播。<br>‘’’python</p>
-<h1 id="coding-utf-8-1"><a href="#coding-utf-8-1" class="headerlink" title="-- coding: utf-8 --"></a>-<em>- coding: utf-8 -</em>-</h1><p>import torch</p>
-<p>dtype = torch.float<br>device = torch.device(“cpu”) # 用CPU训练</p>
-<h1 id="device-torch-device-“cuda-0”-或者也可以用GPU"><a href="#device-torch-device-“cuda-0”-或者也可以用GPU" class="headerlink" title="device = torch.device(“cuda:0”) # 或者也可以用GPU"></a>device = torch.device(“cuda:0”) # 或者也可以用GPU</h1><p>N, D_in, H, D_out = 64, 1000, 100, 10</p>
-<p>x = torch.randn(N, D_in, device=device, dtype=dtype)<br>y = torch.randn(N, D_out, device=device, dtype=dtype)</p>
-<p>w1 = torch.randn(D_in, H, device=device, dtype=dtype)<br>w2 = torch.randn(H, D_out, device=device, dtype=dtype)</p>
-<p>learning_rate = 1e-6<br>for t in range(500):</p>
-<pre><code># 前向传播
-h = x.mm(w1)
-h_relu = h.clamp(min=0)
-y_pred = h_relu.mm(w2)
-
-# 计算损失
-loss = (y_pred - y).pow(2).sum().item()
-print(t, loss)
-
-# 反向传播为w1，w2计算梯度
-grad_y_pred = 2.0 * (y_pred - y)
-grad_w2 = h_relu.t().mm(grad_y_pred)
-grad_h_relu = grad_y_pred.mm(w2.t())
-grad_h = grad_h_relu.clone()
-grad_h[h &lt; 0] = 0
-grad_w1 = x.t().mm(grad_h)
-
-# 更新权值
-w1 -= learning_rate * grad_w1
-w2 -= learning_rate * grad_w2
-</code></pre><p>‘’’</p>
-<h2 id="Autograd"><a href="#Autograd" class="headerlink" title="Autograd"></a>Autograd</h2><h3 id="Tensors和autograd"><a href="#Tensors和autograd" class="headerlink" title="Tensors和autograd"></a>Tensors和autograd</h3><p>在前面例子中，我们手动设计了网络前向和反向传播，对于一个简单的网络来说，这样做并没有任何困难，但在面对一个十分复杂的网络设计时，手动设计网络前向和反向传播变得不现实。<br>我们希望可以系统自动计算神经网络中的反向传播，而PyTorch中的autograd包便提供了这样的功能。使用autograd时，网络的正向传递将定义计算图，图中的节点是张量，边是从输入张量产生输出张量的函数。通过此图反向传播，便可自动计算梯度。<br>‘’’python</p>
-<h1 id="coding-utf-8-2"><a href="#coding-utf-8-2" class="headerlink" title="-- coding: utf-8 --"></a>-<em>- coding: utf-8 -</em>-</h1><p>import torch</p>
-<p>dtype = torch.float<br>device = torch.device(“cpu”) # 使用CPU训练</p>
-<h1 id="device-torch-device-“cuda-0”-或者也可以用GPU-1"><a href="#device-torch-device-“cuda-0”-或者也可以用GPU-1" class="headerlink" title="device = torch.device(“cuda:0”) # 或者也可以用GPU"></a>device = torch.device(“cuda:0”) # 或者也可以用GPU</h1><p>N, D_in, H, D_out = 64, 1000, 100, 10</p>
-<p>x = torch.randn(N, D_in, device=device, dtype=dtype)<br>y = torch.randn(N, D_out, device=device, dtype=dtype)</p>
-<p>w1 = torch.randn(D_in, H, device=device, dtype=dtype, requires_grad=True)<br>w2 = torch.randn(H, D_out, device=device, dtype=dtype, requires_grad=True)</p>
-<p>learning_rate = 1e-6<br>for t in range(500):</p>
-<pre><code># 前向传播
-y_pred = x.mm(w1).clamp(min=0).mm(w2)
-# 计算损失
-loss = (y_pred - y).pow(2).sum()
-print(t, loss.item())
-# 反向传播，计算梯度
-loss.backward()
-# 梯度更新
-with torch.no_grad():
-    w1 -= learning_rate * w1.grad
-    w2 -= learning_rate * w2.grad
-    # 梯度清零
-    w1.grad.zero_()
-    w2.grad.zero_()
-</code></pre><p>‘’’</p>
-<h3 id="定义新的autograd函数"><a href="#定义新的autograd函数" class="headerlink" title="定义新的autograd函数"></a>定义新的autograd函数</h3><p>在这个例子中，自定义autograd函数来实现ReLU非线性，并使用它来设计网络。<br>‘’’python</p>
-<h1 id="coding-utf-8-3"><a href="#coding-utf-8-3" class="headerlink" title="-- coding: utf-8 --"></a>-<em>- coding: utf-8 -</em>-</h1><p>import torch</p>
-<p>class MyReLU(torch.autograd.Function):<br>    @staticmethod<br>    def forward(ctx, input):<br>        ctx.save_for_backward(input)<br>        return input.clamp(min=0)</p>
-<pre><code>@staticmethod
-def backward(ctx, grad_output):
-    input, = ctx.saved_tensors
-    grad_input = grad_output.clone()
-    grad_input[input &lt; 0] = 0
-    return grad_input
-</code></pre><p>dtype = torch.float<br>device = torch.device(“cpu”)</p>
-<h1 id="device-torch-device-“cuda-0”"><a href="#device-torch-device-“cuda-0”" class="headerlink" title="device = torch.device(“cuda:0”)"></a>device = torch.device(“cuda:0”)</h1><p>N, D_in, H, D_out = 64, 1000, 100, 10</p>
-<p>x = torch.randn(N, D_in, device=device, dtype=dtype)<br>y = torch.randn(N, D_out, device=device, dtype=dtype)</p>
-<p>w1 = torch.randn(D_in, H, device=device, dtype=dtype, requires_grad=True)<br>w2 = torch.randn(H, D_out, device=device, dtype=dtype, requires_grad=True)</p>
-<p>learning_rate = 1e-6<br>for t in range(500):<br>    relu = MyReLU.apply # 调用自定义的ReLU函数</p>
-<pre><code># 前向传播
-y_pred = relu(x.mm(w1)).mm(w2)
-
-# 计算损失
-loss = (y_pred - y).pow(2).sum()
-print(t, loss.item())
-
-# 反向传播，计算梯度
-loss.backward()
-
-# 更新权值
-with torch.no_grad():
-    w1 -= learning_rate * w1.grad
-    w2 -= learning_rate * w2.grad
-    # 梯度清零
-    w1.grad.zero_()
-    w2.grad.zero_()
-</code></pre><p>‘’’</p>
-<h2 id="nn-module"><a href="#nn-module" class="headerlink" title="nn module"></a>nn module</h2><p>今天就讲到这里，再见！</p>
-
-          
+          <p>当经过前面PyTorch闪电战的入门洗礼，你已经具备了最基本PyTorch知识。而本章将继续介绍PyTorch的3大概念Tensors，Autograd和nn module，并以实例展示出来。教程原文请参考<a href="https://pytorch.org/tutorials/beginner/pytorch_with_examples.html#" target="_blank" rel="noopener">Learning PyTorch with Examples</a><br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/09/14/Pytorch-5/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -607,39 +500,14 @@ with torch.no_grad():
 
       
         
-          
-            <h2 id="训练分类器"><a href="#训练分类器" class="headerlink" title="训练分类器"></a>训练分类器</h2><p>PyTorch对于视觉处理有一个专门的包，包括一些如MNIST等常见数据集的数据加载器，以及对于图像的数据转换器，torchvision.datasets和torch.utils.data.DataLoader。<br>官网以CIFAR10数据集为例，演示了多种物体的图像识别。CIFAR-10中的图像尺寸为3×32×32，即尺寸为32×32像素的3通道彩色图像。教程中按顺序执行以下步骤：<br>1.使用torchvision加载和标准化CIFAR10训练和测试数据集<br>2.定义卷积神经网络<br>3.定义损失函数<br>4.在训练数据上训练网络<br>5.在测试数据上测试网络</p>
-<h3 id="加载和标准化CIFAR10"><a href="#加载和标准化CIFAR10" class="headerlink" title="加载和标准化CIFAR10"></a>加载和标准化CIFAR10</h3><p>‘’’python<br>import torch<br>import torchvision<br>import torchvision.transforms as transforms</p>
-<p>transform = transforms.Compose( # 组合多个变换<br>    [transforms.ToTensor(), # 转换为张量<br>    transforms.Normalize((0.5,0.5,0.5),(0.5,0.5,0.5))]) # 正态分布的均值与方差</p>
-<p>trainset = torchvision.datasets.CIFAR10(root=’./data’,train=True, # 训练集<br>                                        download=True,transform=transform) # 数据转换方式<br>trainloder = torch.utils.data.DataLoader(trainset, batch_size=4,<br>                                        shuffle=True, num_workers=2) #数据加载的子进程数</p>
-<p>testset = torchvision.datasets.CIFAR10(root=’./data’, train=False, # 测试集<br>                                       download=True, transform=transform)<br>testloader = torch.utils.data.DataLoader(testset, batch_size=4,<br>                                         shuffle=False, num_workers=2)</p>
-<p>classes = (‘plane’, ‘car’, ‘bird’, ‘cat’,<br>           ‘deer’, ‘dog’, ‘frog’, ‘horse’, ‘ship’, ‘truck’)<br>‘’’</p>
-<h3 id="定义卷积神经网络"><a href="#定义卷积神经网络" class="headerlink" title="定义卷积神经网络"></a>定义卷积神经网络</h3><p>‘’’python<br>import torch.nn as nn<br>import torch.nn.functional as F</p>
-<p>class Net(nn.Module):<br>    def <strong>init</strong>(self):<br>        super(Net,self).<strong>init</strong>()<br>        self.conv1 = nn.Conv2d(3,6,5) # in_ch, out_ch, kernel_size=5<em>5<br>        self.pool = nn.MaxPool2d(2,2) # kernel_size=2</em>2, stride=2<br>        self.conv2 = nn.Conv2d(6,16,5)<br>        self.fc1 = nn.Linear(16<em>5</em>5,120) # in, out<br>        self.fc2 = nn.Linear(120,84)<br>        self.fc3 = nn.Linear(84,10) # out put class=10<br>    def forward(self,x):<br>        x = self.pool(F.relu(self.conv1(x)))<br>        x = self.pool(F.relu(self.conv2(x)))<br>        x = F.relu(self.fc1(x))<br>        x = F.relu(self.fc2(x))<br>        x = self.fc3(x)<br>        return x</p>
-<p>net = Net()<br>‘’’</p>
-<h3 id="定义损失函数"><a href="#定义损失函数" class="headerlink" title="定义损失函数"></a>定义损失函数</h3><p>‘’’python<br>import torch.optim as optim</p>
-<p>criterion = nn.CrossEntropyLoss()<br>optimizer = optim.SGD(net.parameters(),lr=0.001,momentum=0.9)<br>‘’’<br>Momentum的方法是在参数更新中加入动量项，对那些当前梯度与上次梯度相同的参数进行加强，反之削弱。这种方法可以获得更快收敛和较少振荡。</p>
-<h3 id="训练网络"><a href="#训练网络" class="headerlink" title="训练网络"></a>训练网络</h3><p>‘’’python<br>for epoch in range(2):</p>
-<pre><code>running_loss = 0.0
-for i,data in enumerate(trainloader,0):
-    inputs, labels = data
-    optimizer.zero_grad() # 梯度清零
-
-    outputs = net(input) # 前向传播
-    loss = criterion(outputs,labels) # 计算损失
-    loss.backward() # 反向传播
-    optimizer.step() # 参数更新
-
-    running_loss +=loss.item()
-    if i % 2000 == 1999: # 每2000个mini-batch 打印一次
-        print(&apos;[%d,%5d] loss: %.3f&apos; %(epoch + 1, i + 1, running_loss /2000))
-        running_loss = 0.0
-</code></pre><p>print(‘Finished Training’)<br>‘’’</p>
-<h3 id="测试网络"><a href="#测试网络" class="headerlink" title="测试网络"></a>测试网络</h3><p>‘’’python<br>correct = 0<br>total = 0<br>with torch.no_grad():<br>    for data in testloader:<br>        images, labels = data<br>        outputs = net(images)<br>        _, predicted = torch.max(outputs.data, 1) # 返回行最大值和最大值对应的位置<br>        total += labels.size(0)<br>        correct += (predicted == labels).sum().item()</p>
-<p>print(‘Accuracy of the network on the 10000 test images: %d %%’ % (<br>    100 * correct / total))<br>‘’’</p>
-<h3 id="在GPU上训练"><a href="#在GPU上训练" class="headerlink" title="在GPU上训练"></a>在GPU上训练</h3><p>‘’’python<br>device = torch.device(“cuda:0” if torch.cuda.is_available() else “cpu”)<br>net.to(device)<br>‘’’<br>必须将每一步的输入和目标发送到GPU。<br>‘’’python<br>inputs, labels = inputs.to(device), labels.to(device)<br>‘’’<br>至此你已经成功接受了PyTorch的入门闪电战。</p>
-
-          
+          <h2 id="训练分类器"><a href="#训练分类器" class="headerlink" title="训练分类器"></a>训练分类器</h2><p>PyTorch对于视觉处理有一个专门的包，包括一些如MNIST等常见数据集的数据加载器，以及对于图像的数据转换器，torchvision.datasets和torch.utils.data.DataLoader。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/09/05/Pytorch-4/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
