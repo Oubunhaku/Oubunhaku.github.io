@@ -82,14 +82,14 @@
 <meta name="description" content="训练分类器PyTorch对于视觉处理有一个专门的包，包括一些如MNIST等常见数据集的数据加载器，以及对于图像的数据转换器，torchvision.datasets和torch.utils.data.DataLoader。官网以CIFAR10数据集为例，演示了多种物体的图像识别。CIFAR-10中的图像尺寸为3×32×32，即尺寸为32×32像素的3通道彩色图像。教程中按顺序执行以下步骤：1.使用">
 <meta name="keywords" content="PyTorch">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PyTorch Beginner 4：PyTorch头脑风暴(4)">
+<meta property="og:title" content="PyTorch Beginner 4：PyTorch闪电战(4)">
 <meta property="og:url" content="http://yoursite.com/2018/09/05/Pytorch-4/index.html">
 <meta property="og:site_name" content="Oubunhaku">
 <meta property="og:description" content="训练分类器PyTorch对于视觉处理有一个专门的包，包括一些如MNIST等常见数据集的数据加载器，以及对于图像的数据转换器，torchvision.datasets和torch.utils.data.DataLoader。官网以CIFAR10数据集为例，演示了多种物体的图像识别。CIFAR-10中的图像尺寸为3×32×32，即尺寸为32×32像素的3通道彩色图像。教程中按顺序执行以下步骤：1.使用">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-09-14T05:35:42.810Z">
+<meta property="og:updated_time" content="2018-09-14T05:48:14.063Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PyTorch Beginner 4：PyTorch头脑风暴(4)">
+<meta name="twitter:title" content="PyTorch Beginner 4：PyTorch闪电战(4)">
 <meta name="twitter:description" content="训练分类器PyTorch对于视觉处理有一个专门的包，包括一些如MNIST等常见数据集的数据加载器，以及对于图像的数据转换器，torchvision.datasets和torch.utils.data.DataLoader。官网以CIFAR10数据集为例，演示了多种物体的图像识别。CIFAR-10中的图像尺寸为3×32×32，即尺寸为32×32像素的3通道彩色图像。教程中按顺序执行以下步骤：1.使用">
 
 
@@ -126,7 +126,7 @@
 
 
 
-  <title>PyTorch Beginner 4：PyTorch头脑风暴(4) | Oubunhaku</title>
+  <title>PyTorch Beginner 4：PyTorch闪电战(4) | Oubunhaku</title>
   
 
 
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">PyTorch Beginner 4：PyTorch头脑风暴(4)</h1>
+          <h1 class="post-title" itemprop="name headline">PyTorch Beginner 4：PyTorch闪电战(4)</h1>
         
 
         <div class="post-meta">
@@ -381,7 +381,7 @@ for i,data in enumerate(trainloader,0):
 </code></pre><p>print(‘Finished Training’)<br>‘’’</p>
 <h3 id="测试网络"><a href="#测试网络" class="headerlink" title="测试网络"></a>测试网络</h3><p>‘’’python<br>correct = 0<br>total = 0<br>with torch.no_grad():<br>    for data in testloader:<br>        images, labels = data<br>        outputs = net(images)<br>        _, predicted = torch.max(outputs.data, 1) # 返回行最大值和最大值对应的位置<br>        total += labels.size(0)<br>        correct += (predicted == labels).sum().item()</p>
 <p>print(‘Accuracy of the network on the 10000 test images: %d %%’ % (<br>    100 * correct / total))<br>‘’’</p>
-<h3 id="在GPU上训练"><a href="#在GPU上训练" class="headerlink" title="在GPU上训练"></a>在GPU上训练</h3><p>‘’’python<br>device = torch.device(“cuda:0” if torch.cuda.is_available() else “cpu”)<br>net.to(device)<br>‘’’<br>必须将每一步的输入和目标发送到GPU。<br>‘’’python<br>inputs, labels = inputs.to(device), labels.to(device)<br>‘’’<br>至此你已经接受完了PyTorch头脑风暴的入门洗礼。</p>
+<h3 id="在GPU上训练"><a href="#在GPU上训练" class="headerlink" title="在GPU上训练"></a>在GPU上训练</h3><p>‘’’python<br>device = torch.device(“cuda:0” if torch.cuda.is_available() else “cpu”)<br>net.to(device)<br>‘’’<br>必须将每一步的输入和目标发送到GPU。<br>‘’’python<br>inputs, labels = inputs.to(device), labels.to(device)<br>‘’’<br>至此你已经成功接受了PyTorch的入门闪电战。</p>
 
       
     </div>
@@ -412,8 +412,8 @@ for i,data in enumerate(trainloader,0):
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/09/05/Pytorch-3/" rel="next" title="PyTorch Beginner 3：PyTorch头脑风暴(3)">
-                <i class="fa fa-chevron-left"></i> PyTorch Beginner 3：PyTorch头脑风暴(3)
+              <a href="/2018/09/05/Pytorch-3/" rel="next" title="PyTorch Beginner 3：PyTorch闪电战(3)">
+                <i class="fa fa-chevron-left"></i> PyTorch Beginner 3：PyTorch闪电战(3)
               </a>
             
           </div>
@@ -421,6 +421,10 @@ for i,data in enumerate(trainloader,0):
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/14/Pytorch-5/" rel="prev" title="PyTorch Beginner 5：通过示例学习PyTorch">
+                PyTorch Beginner 5：通过示例学习PyTorch <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -497,7 +501,7 @@ for i,data in enumerate(trainloader,0):
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
