@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="ASR," />
+  <meta name="keywords" content="PyTorch," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="I’m Oubunhaku, from now, I’ll start recording my ESPnet learning. 什么是 ESPnet?根据ESPnet网站上的解释，ESPnet是一个端到端的语音处理工具包，主要侧重于端到端语音识别和端到端的文本到语音转换。 ESPnet使用chainer和pytorch作为主要的深度学习引擎，并遵循Kaldi风格的data processing">
-<meta name="keywords" content="ASR">
+<meta name="description" content="这一节我们会学习如何使用Transfer Learning来训练网络，教程原文请参考Transfer Learning tutorial。">
+<meta name="keywords" content="PyTorch">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ESPnet Learning(1)：认识与安装">
-<meta property="og:url" content="http://yoursite.com/2018/09/02/ESPnet-Learning-1/index.html">
+<meta property="og:title" content="PyTorch Beginner 6：Transfer Learning">
+<meta property="og:url" content="http://yoursite.com/2018/09/17/Pytorch-6/index.html">
 <meta property="og:site_name" content="Oubunhaku">
-<meta property="og:description" content="I’m Oubunhaku, from now, I’ll start recording my ESPnet learning. 什么是 ESPnet?根据ESPnet网站上的解释，ESPnet是一个端到端的语音处理工具包，主要侧重于端到端语音识别和端到端的文本到语音转换。 ESPnet使用chainer和pytorch作为主要的深度学习引擎，并遵循Kaldi风格的data processing">
+<meta property="og:description" content="这一节我们会学习如何使用Transfer Learning来训练网络，教程原文请参考Transfer Learning tutorial。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-09-03T11:19:19.495Z">
+<meta property="og:updated_time" content="2018-09-17T06:30:22.473Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ESPnet Learning(1)：认识与安装">
-<meta name="twitter:description" content="I’m Oubunhaku, from now, I’ll start recording my ESPnet learning. 什么是 ESPnet?根据ESPnet网站上的解释，ESPnet是一个端到端的语音处理工具包，主要侧重于端到端语音识别和端到端的文本到语音转换。 ESPnet使用chainer和pytorch作为主要的深度学习引擎，并遵循Kaldi风格的data processing">
+<meta name="twitter:title" content="PyTorch Beginner 6：Transfer Learning">
+<meta name="twitter:description" content="这一节我们会学习如何使用Transfer Learning来训练网络，教程原文请参考Transfer Learning tutorial。">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/09/02/ESPnet-Learning-1/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/09/17/Pytorch-6/"/>
 
 
 
 
 
-  <title>ESPnet Learning(1)：认识与安装 | Oubunhaku</title>
+  <title>PyTorch Beginner 6：Transfer Learning | Oubunhaku</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/02/ESPnet-Learning-1/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/17/Pytorch-6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="WANG Wenbo">
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">ESPnet Learning(1)：认识与安装</h1>
+          <h1 class="post-title" itemprop="name headline">PyTorch Beginner 6：Transfer Learning</h1>
         
 
         <div class="post-meta">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-02T12:35:51+09:00">
-                2018-09-02
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-17T14:19:34+09:00">
+                2018-09-17
               </time>
             
 
@@ -315,8 +315,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ESPnet-Learning/" itemprop="url" rel="index">
-                    <span itemprop="name">ESPnet Learning</span>
+                  <a href="/categories/PyTorch/" itemprop="url" rel="index">
+                    <span itemprop="name">PyTorch</span>
                   </a>
                 </span>
 
@@ -352,10 +352,10 @@
       
 
       
-        <p>I’m Oubunhaku, from now, I’ll start recording my <a href="https://github.com/Oubunhaku/espnet" target="_blank" rel="noopener">ESPnet</a> learning.</p>
-<h2 id="什么是-ESPnet"><a href="#什么是-ESPnet" class="headerlink" title="什么是 ESPnet?"></a>什么是 ESPnet?</h2><p>根据<a href="https://github.com/Oubunhaku/espnet" target="_blank" rel="noopener">ESPnet</a>网站上的解释，ESPnet是一个端到端的语音处理工具包，主要侧重于端到端语音识别和端到端的文本到语音转换。 ESPnet使用<a href="https://docs.chainer.org/en/stable/index.html" target="_blank" rel="noopener">chainer</a>和<a href="https://pytorch.org/docs/stable/index.html#" target="_blank" rel="noopener">pytorch</a>作为主要的深度学习引擎，并遵循Kaldi风格的data processing, feature extraction/format和recipes，为语音识别和其他语音处理实验提供完整的设置。ESPnet主要在混合CTC/Attention架构上进行语音识别。</p>
-<p><font color="ff0000">More info: <a href="https://github.com/Oubunhaku/espnet" target="_blank" rel="noopener">ESPnet</a></font><br><a id="more"></a></p>
-<h2 id="下载与安装-ESPnet"><a href="#下载与安装-ESPnet" class="headerlink" title="下载与安装 ESPnet"></a>下载与安装 ESPnet</h2><p>你可以直接参考<a href="https://github.com/Oubunhaku/espnet" target="_blank" rel="noopener">ESPnet</a>网站上的下载安装指南，或是参考我总结的文章<a href="../../../../images/ExecuteESPnet.pdf">Execute CHiME-5 Baseline in ESPnet</a>。当你保证各种要求的库全部安装完毕且各种路径设置正确，你就可以开始跑你的第一个ESPnet recipe了。随便进入一个语音库的目录中，按照如下命令运行试试看。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./run.sh --backend chainer</span><br></pre></td></tr></table></figure></p>
+        <p>这一节我们会学习如何使用Transfer Learning来训练网络，教程原文请参考<a href="https://pytorch.org/tutorials/beginner/transfer_learning_tutorial.html" target="_blank" rel="noopener">Transfer Learning tutorial</a>。<br><a id="more"></a><br>Transfer Learning的两个主要场景如下：<br>1.微调convnet：使用预训练网络初始化网络，而不是随机初始化，就像在imagenet 1000数据集上训练的网络一样。其余训练看起来像往常一样。<br>2.ConvNet作为固定特征提取器：在这里，我们将冻结除最后的完全连接层之外的所有网络的权重。 最后一个完全连接的层被替换为具有随机权重的新层，并且仅训练该层。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function, division</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> torch.optim <span class="keyword">as</span> optim</span><br><span class="line"><span class="keyword">from</span> torch.optim <span class="keyword">import</span> lr_scheduler</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> torchvision</span><br><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> datasets, models, transforms</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> copy</span><br><span class="line"></span><br><span class="line">plt.ion()   <span class="comment"># 互动模式</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="加载数据"><a href="#加载数据" class="headerlink" title="加载数据"></a>加载数据</h2><p>我们将使用torchvision和torch.utils.data包来加载数据，训练一个模型来对蚂蚁和蜜蜂进行分类。其中大约有120个训练图像，每个图像用于蚂蚁和蜜蜂。每个类有75个验证图像。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">data_transforms = &#123;</span><br><span class="line">	<span class="string">'train'</span>:transforms.Compose([  <span class="comment"># 一起组合几个变换</span></span><br><span class="line">		transforms.RandomResizedCrop(<span class="number">224</span>), <span class="comment"># 随机裁剪，每个边缘的预期输出大小224</span></span><br><span class="line">		transforms.RandomHorizontalFlip(), <span class="comment"># 以给定的概率（默认0.5）随机水平翻转给定的PIL图像</span></span><br><span class="line">		transforms.ToTensor(), <span class="comment"># 将PIL图像或numpy.ndarray转换为张量</span></span><br><span class="line">		transforms.Normalize([<span class="number">0.485</span>,<span class="number">0.456</span>,<span class="number">0.406</span>],[<span class="number">0.229</span>,<span class="number">0.224</span>,<span class="number">0.225</span>]) <span class="comment"># 用平均值和标准偏差归一化张量图像</span></span><br><span class="line">	])</span><br><span class="line">	<span class="string">'val'</span>:transforms.Compose([</span><br><span class="line">		transforms.Resize(<span class="number">256</span>), <span class="comment"># 将输入PIL图像的大小调整为给定大小256</span></span><br><span class="line">		transforms.CenterCrop(<span class="number">224</span>), <span class="comment"># 中心裁剪PIL图像</span></span><br><span class="line">		transforms.ToTensor(),</span><br><span class="line">		transforms.Normalize([<span class="number">0.485</span>,<span class="number">0.456</span>,<span class="number">0.406</span>],[<span class="number">0.229</span>,<span class="number">0.224</span>,<span class="number">0.225</span>])</span><br><span class="line">	])</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">data_dir = <span class="string">'hymenoptera_data'</span></span><br><span class="line">image_datasets = &#123;x: datasets.ImageFolder(os.path.join(data_dir,x),</span><br><span class="line">					data_transforms[x])</span><br><span class="line">				<span class="keyword">for</span> x <span class="keyword">in</span> [<span class="string">'train'</span>,<span class="string">'val'</span>]&#125;  <span class="comment"># 格式为 &#123;'train': 'data_dir/train/xx.png', 'val': 'data_dir/val/yy.png'&#125;</span></span><br><span class="line">dataloaders = &#123;x:torch.utils.data.DataLoader(image_datasets[x],batch_size=<span class="number">4</span>,</span><br><span class="line">											shuffle=<span class="keyword">True</span>,num_workers=<span class="number">4</span>)</span><br><span class="line">				<span class="keyword">for</span> x <span class="keyword">in</span> [<span class="string">'train'</span>,<span class="string">'val'</span>]&#125;</span><br><span class="line">dataset_sizes = &#123;x:len(image_datasets[x]) <span class="keyword">for</span> x <span class="keyword">in</span> [<span class="string">'train'</span>,<span class="string">'val'</span>]&#125;</span><br><span class="line">class_names = image_datasets[<span class="string">'train'</span>].classes</span><br><span class="line">device = torch.device(<span class="string">"cuda:0"</span> <span class="keyword">if</span> torch.cuda.is_available() <span class="keyword">else</span> <span class="string">"cpu"</span>)</span><br></pre></td></tr></table></figure></p>
+<h2 id="训练模型"><a href="#训练模型" class="headerlink" title="训练模型"></a>训练模型</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train_model</span><span class="params">(model, criterion, optimizer, scheduler, num_epochs=<span class="number">25</span>)</span>:</span></span><br><span class="line">	since = time.time()</span><br><span class="line">	best_model_wts = copy.deepcopy(model.state_dict())</span><br><span class="line">	best_acc = <span class="number">0.0</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span> epoch <span class="keyword">in</span> range(num_epochs):</span><br><span class="line">		print(<span class="string">'Epoch &#123;&#125;/&#123;&#125;'</span>.format(epoch,num_epochs<span class="number">-1</span>))</span><br><span class="line">		print(<span class="string">'-'</span> * <span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<p>今天先到这里，拜拜！</p>
 
       
     </div>
@@ -373,7 +373,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/ASR/" rel="tag"># ASR</a>
+            <a href="/tags/PyTorch/" rel="tag"># PyTorch</a>
           
         </div>
       
@@ -386,15 +386,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/09/14/Pytorch-5/" rel="next" title="PyTorch Beginner 5：通过示例学习PyTorch">
+                <i class="fa fa-chevron-left"></i> PyTorch Beginner 5：通过示例学习PyTorch
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/09/02/ESPnet-Learning-2/" rel="prev" title="ESPnet Learning(2)：资源文件">
-                ESPnet Learning(2)：资源文件 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -526,7 +526,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是-ESPnet"><span class="nav-number">1.</span> <span class="nav-text">什么是 ESPnet?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载与安装-ESPnet"><span class="nav-number">2.</span> <span class="nav-text">下载与安装 ESPnet</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#加载数据"><span class="nav-number">1.</span> <span class="nav-text">加载数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#训练模型"><span class="nav-number">2.</span> <span class="nav-text">训练模型</span></a></li></ol></div>
             
 
           </div>
