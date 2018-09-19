@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="PyTorch," />
 
 
 
@@ -79,16 +79,18 @@
 
 
 
-<meta name="description" content="Hello, I&apos;m Oubunhaku">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Oubunhaku">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+<meta name="description" content="PyTorch提供了许多工具来简化和希望数据加载，使代码更具可读性。我们本节将了解如何从非平凡的数据集加载和预处理/扩充数据。要运行本教程，请确保安装了以下软件包：scikit-image：用于图像io和变换pandas：更容易进行csv解析原教程请参考Data loading and processing tutorial">
+<meta name="keywords" content="PyTorch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PyTorch Beginner 7：数据加载和处理">
+<meta property="og:url" content="http://yoursite.com/2018/09/19/pytorch-7/index.html">
 <meta property="og:site_name" content="Oubunhaku">
-<meta property="og:description" content="Hello, I&apos;m Oubunhaku">
+<meta property="og:description" content="PyTorch提供了许多工具来简化和希望数据加载，使代码更具可读性。我们本节将了解如何从非平凡的数据集加载和预处理/扩充数据。要运行本教程，请确保安装了以下软件包：scikit-image：用于图像io和变换pandas：更容易进行csv解析原教程请参考Data loading and processing tutorial">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-09-19T06:00:33.084Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Oubunhaku">
-<meta name="twitter:description" content="Hello, I&apos;m Oubunhaku">
+<meta name="twitter:title" content="PyTorch Beginner 7：数据加载和处理">
+<meta name="twitter:description" content="PyTorch提供了许多工具来简化和希望数据加载，使代码更具可读性。我们本节将了解如何从非平凡的数据集加载和预处理/扩充数据。要运行本教程，请确保安装了以下软件包：scikit-image：用于图像io和变换pandas：更容易进行csv解析原教程请参考Data loading and processing tutorial">
 
 
 
@@ -118,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/09/19/pytorch-7/"/>
 
 
 
 
 
-  <title>Archive | Oubunhaku</title>
+  <title>PyTorch Beginner 7：数据加载和处理 | Oubunhaku</title>
   
 
 
@@ -143,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -247,370 +249,170 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/19/pytorch-7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WANG Wenbo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Oubunhaku">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">PyTorch Beginner 7：数据加载和处理</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-19T14:53:49+09:00">
+                2018-09-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        Um..! 9 posts in total. Keep on posting.
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PyTorch/" itemprop="url" rel="index">
+                    <span itemprop="name">PyTorch</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
 
-        
+          
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/19/pytorch-7/" itemprop="url">
-              
-                <span itemprop="name">PyTorch Beginner 7：数据加载和处理</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-09-19T14:53:49+09:00"
-              content="2018-09-19" >
-          09-19
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+          
 
+        </div>
+      </header>
+    
 
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/17/Pytorch-6/" itemprop="url">
-              
-                <span itemprop="name">PyTorch Beginner 6：Transfer Learning</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-09-17T14:19:34+09:00"
-              content="2018-09-17" >
-          09-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/14/Pytorch-5/" itemprop="url">
-              
-                <span itemprop="name">PyTorch Beginner 5：通过示例学习PyTorch</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-09-14T14:43:13+09:00"
-              content="2018-09-14" >
-          09-14
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p>PyTorch提供了许多工具来简化和希望数据加载，使代码更具可读性。我们本节将了解如何从非平凡的数据集加载和预处理/扩充数据。要运行本教程，请确保安装了以下软件包：<br>scikit-image：用于图像io和变换<br>pandas：更容易进行csv解析<br>原教程请参考<a href="https://shiftlab.github.io/pytorch_tutorials/beginner/data_loading_tutorial.html" target="_blank" rel="noopener">Data loading and processing tutorial</a><br><a id="more"></a><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function, division</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> skimage <span class="keyword">import</span> io, transform</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> Dataset, DataLoader</span><br><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> transforms, utils</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ignore warnings</span></span><br><span class="line"><span class="keyword">import</span> warnings</span><br><span class="line">warnings.filterwarnings(<span class="string">"ignore"</span>)</span><br><span class="line"></span><br><span class="line">plt.ion()</span><br></pre></td></tr></table></figure></p>
+<p>先讲到这里。。。</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/05/Pytorch-4/" itemprop="url">
-              
-                <span itemprop="name">PyTorch Beginner 4：PyTorch闪电战(4)</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-09-05T16:29:37+09:00"
-              content="2018-09-05" >
-          09-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/05/Pytorch-3/" itemprop="url">
-              
-                <span itemprop="name">PyTorch Beginner 3：PyTorch闪电战(3)</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-09-05T15:08:31+09:00"
-              content="2018-09-05" >
-          09-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/05/Pytorch-2/" itemprop="url">
-              
-                <span itemprop="name">PyTorch Beginner 2：PyTorch闪电战(2)</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-09-05T14:34:44+09:00"
-              content="2018-09-05" >
-          09-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/05/Pytorch-1/" itemprop="url">
-              
-                <span itemprop="name">PyTorch Beginner 1：PyTorch闪电战(1)</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-09-05T12:54:06+09:00"
-              content="2018-09-05" >
-          09-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/02/ESPnet-Learning-2/" itemprop="url">
-              
-                <span itemprop="name">ESPnet Learning(2)：资源文件</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-09-02T12:38:08+09:00"
-              content="2018-09-02" >
-          09-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/02/ESPnet-Learning-1/" itemprop="url">
-              
-                <span itemprop="name">ESPnet Learning(1)：认识与安装</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-09-02T12:35:51+09:00"
-              content="2018-09-02" >
-          09-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PyTorch/" rel="tag"># PyTorch</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/17/Pytorch-6/" rel="next" title="PyTorch Beginner 6：Transfer Learning">
+                <i class="fa fa-chevron-left"></i> PyTorch Beginner 6：Transfer Learning
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -618,6 +420,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -844,6 +650,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
